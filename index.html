@@ -1,0 +1,121 @@
+<html>
+    <head>
+        <title>JS Form Demo</title>
+    </head>
+
+    <body>
+        <form name="contactForm" onsubmit="return validateForm()">
+            <h2>Application Form</h2>
+            <div class="row">
+                <label>Full Name</label>
+                <input type="text" name="name">
+                <div class="error" id="nameErr"></div>
+            </div> 
+            
+            <div class="row">
+                    <label>Email Address</label>
+                    <input type="text" name="email">
+                    <div class="error" id="emailErr"></div>
+            </div>  
+
+            <div class="row">
+                    <label>Mobile Number</label>
+                    <input type="text" name="mobile" maxlength="10">
+                    <div class="error" id="mobileErr"></div>
+            </div> 
+
+            <div class="row">
+                    <label>Country</label>
+                    <select name="country">
+                        <option>Select</option>
+                        <option>United States</option>
+                        <option>India</option>
+                        <option>United Kingdom</option>
+                        <option>Australia</option>
+                    </select>
+                    <div class="error" id="countryErr"></div>
+            </div>
+            
+            <div class="row">
+                    <label>Gender</label>
+                    <div class="form-inline">
+                        <label><input type="radio" name="gender" value="male"></label>
+                        <label><input type="radio" name="gender" value="female"></label>
+                     </div>   
+                    <div class="error" id="genderErr"></div>
+            </div> 
+
+            <div class="row">
+                    <label>Hobbies <i>(Optional)</i></label>
+                    <div class="form-inline">
+                        <label><input type="checkbox" name="hobbies[]" value="sports">Sports</label>
+                        <label><input type="checkbox" name="hobbies[]" value="movies">Movies</label>
+                        <label><input type="checkbox" name="hobbies[]" value="music">Music</label>
+                    </div>
+            </div> 
+
+            <div class="row">
+                <input type="submit" value="Submit">
+            </div>
+        </form>
+
+        <script>
+            function printError(elemId, hintMsg){
+                document.getElementById(elemId).innerHTML=hintMsg
+            }
+        
+            function validateForm(){
+                var name=document.contactForm.name.value
+                var email=document.contactForm.email.value
+                var mobile=document.contactForm.mobile.value
+                var country=document.contactForm.country.value
+                var gender=document.contactForm.gender.value
+                var hobbies=[]
+                var checkboxes=document.getElementsByName("hobbies[]")
+                for(var i=0;i<checkboxes.length;i++){
+                    if(checkboxes[i].checked){
+                        hobbies.push(checkboxes[i].value)
+                    }
+                }
+
+                var nameErr = emailErr= mobileErr=countryErr=genderErr=true
+                
+                if(name==""){
+                    printError("nameErr","Please Enter Name")
+                }else{
+                    var regex=/^[a-zA-Z\s]+$/
+                    if(regex.test(name)===false){
+                        printError("nameErr","Please Enter Valid Name")
+                    }else{
+                        printError("nameErr","")
+                        nameErr=false;
+                    }
+                }
+                if(email==""){
+                    printError("emailErr","Please enter email address")
+                }else{
+                    var regex=/\S+@\S+\.\S+/
+                    if(regex.test(email)===false){
+                        printError("emailErr","Please enter valid Email Id")
+                    }else{
+                        printError("emailErr","")
+                        emailErr=false
+                    }
+                }
+
+                if(nameErr || emailErr==true){
+                    return false;
+                }else{
+                    console.log("Hiiiiiiiiiiii")
+                    var dataDisplay="You Entered Name as: "+name+" "+"Email : "+email 
+                    alert(dataDisplay)
+                }
+
+            }
+
+        </script>
+    </body>
+
+    
+
+</html>
